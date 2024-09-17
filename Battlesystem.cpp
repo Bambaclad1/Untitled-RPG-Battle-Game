@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include <random>
+#include "Profile.h"
 
 void Battlesystem::Story() {
 	std::cout << "Pending loading story mode";
@@ -135,12 +136,6 @@ void Battlesystem::Init() {
 	Enemy enemy;
 	int prevPlayerHP = player.getHP();
 	int prevPlayerMP = player.getMP();
-	int prevPlayerAtt = player.getAttack();
-	int prevPlayerDef = player.getDefense();
-
-	int prevEnemyHP = enemy.getHP();
-	int prevEnemyAtt = enemy.getAttack();
-	int prevEnemyDef = enemy.getDefense();
 
 	turn = 1;
 	Sleep(500);
@@ -157,9 +152,19 @@ __________         __    __  .__                     __                 __
 	Sleep(500);
 }
 
+void Battlesystem::EndingInit() {
+	Player player;
+	Enemy enemy;
+
+	player.setHP(prevPlayerHP);
+	player.setMP(prevPlayerMP);
+
+}
+
 void Battlesystem::Battle() {
 	Player player;
 	Enemy enemy;
+	Profile profile;
 
 	bool switching = true;
 	int menu = 1;
@@ -167,7 +172,7 @@ void Battlesystem::Battle() {
 		enemyTurn = true;
 		isDefending = false;
 
-		std::cout << "\n" << player.Name << " Has " << player.getHP() << " HP Left!\n";
+		std::cout << "\n" << player.Name << " Has " << player.getHP() << " HP Left and " << player.getMP() << " MP Left.\n";
 		std::cout << enemy.Name << " Has " << enemy.getHP() << " HP Left!\n";
 		std::cout << "Current turn: " << turn << "\n" << "\n";
 
@@ -175,14 +180,15 @@ void Battlesystem::Battle() {
 		std::cout << "1. Attack\n";
 		std::cout << "2. Defend\n";
 		std::cout << "3. Skill\n";
-		std::cout << "4. Defend\n";
+		std::cout << "4. Inventory\n";
+		std::cout << "5. Stats\n";
 
 		std::cin >> menu;
 
 		if (std::cin.fail()) {
 			std::cin.clear(); // clear input
 			system("cls");
-			std::cout << "Invalid input! Please enter a number between 1 and 4.\n";
+			std::cout << "Invalid input! Please enter a number between 1 and 5.\n";
 			continue;
 		}
 		system("cls");
@@ -209,12 +215,21 @@ void Battlesystem::Battle() {
 			switching = false;
 			break;
 		case 3:
-			std::cout << "You can't do anything yet. You barely know any skills.";
+			Skill(enemy, player);
 			switching = false;
 			break;
 		case 4:
 			std::cout << "In construction.";
 			switching = false;
+			break;
+		case 5:
+			system("cls");
+			switching = true;
+			profile.PlayerProfile();
+			enemyTurn = false;
+			break;
+		default:
+			std::cout << "You did something else instead. Now its the enemy's turn to battle! Oh no!" << std::endl;
 			break;
 		}
 
@@ -257,6 +272,7 @@ void Battlesystem::Battle() {
 	else if (PlayerDied) {
 		std::cout << "\nBattle loss.";
 	}
+	
 }
 
 void Battlesystem::Attack(Enemy& enemy) {
@@ -264,7 +280,8 @@ void Battlesystem::Attack(Enemy& enemy) {
 	bool switching = true;
 
 	while (switching) {
-		std::cout << "What do you use?\n";
+		std::cout << "How will you fight?\n";
+
 		std::cout << "1. Punch\n";
 		std::cout << "ATT | Punches the enemy. Does 2 damage, half on weak and double on crit. 40% chance crit, 20% miss.\n";
 		std::cout << "\n";
@@ -333,6 +350,76 @@ void Battlesystem::Defend() {
 	std::cout << "You decided to get ready and brace yourself for this moment!\n";
 	Sleep(500);
 	isDefending = true;
+}
+
+void Battlesystem::Skill(Enemy& enemy, Player& player) {
+	int mp = player.getMP();
+	int menu = 1;
+	bool switching = true;
+
+	while (switching) {
+		std::cout << "What do you cast?\n";
+
+		std::cout << "1. Firaga | 5MP \n";
+		std::cout << "ATT/El | A basic fire ball being cast with fire elements. Does 5 damage, 40% Crit chance, 20% Miss chance.\n";
+		std::cout << "\n";
+
+
+
+		std::cin >> menu;
+
+		if (std::cin.fail()) {
+			std::cin.clear(); // clear input
+			system("cls");
+			std::cout << "Invalid input! Please enter a number between 1 and 4.\n";
+			continue;
+		}
+		system("cls");
+
+		switch (menu) {
+		case 1:
+			if (mp >= 5) {
+				Firaga(enemy);
+				mp -= 5;
+				player.setMP(mp);
+			}
+			else
+			{
+				std::cout << "What a disaster.. Not enough MP!? Firaga failed!";
+			}
+			switching = false;
+			break;
+		case 2:
+			Kick(enemy);
+			switching = false;
+			break;
+		}
+	}
+}
+
+void Battlesystem::Firaga(Enemy& enemy) {
+	std::cout << "The magic power of your anchestors surround you, ready to cast a fireball to " << enemy.Name << "\n";
+	int dmg = RandomizerAtt(5);
+	Sleep(500);
+	DealMagicDamageToEnemy(enemy,dmg);
+}
+
+void Battlesystem::DealMagicDamageToEnemy(Enemy& enemy, int dmg) {
+	Player player;
+
+	int MPatt = player.getMagicPower();
+	dmg = dmg * MPatt;
+	int hp = enemy.getHP();
+	hp -= dmg;
+	enemy.setHP(hp);
+	std::cout << "\n" << "You dealt " << dmg << " Damage to " << Enemy::Name << "!\n";
+
+	if (player.getMagicPower() >= 2 && dmg >= 0) {
+		std::cout << "However because of your Magic stat being " << player.getAttack() << " points, it was multiplied by that. Nice!\n";
+	}
+
+	Sleep(1000);
+
 }
 
 int Battlesystem::RandomizerAtt(int damage) {

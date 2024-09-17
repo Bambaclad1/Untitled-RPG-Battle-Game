@@ -17,7 +17,7 @@ __________.__                              __________                _____.__.__
 	Sleep(500);
     std::cout << "\nWelcome, hero " << player.Name << "!\n";
     std::cout << "You are currently level " << player.getLevel() << " and you currently have " << player.getEXP() << " EXP.\n";
-    std::cout << "Stats: " << "HP: " << player.getHP() << "  MP: " << player.getMP() << "  Attack: " << player.getAttack() << "  Defense: " << player.getDefense() << "  Money: " << player.getMoney();
+    std::cout << "Stats: " << "HP: " << player.getHP() << "  MP: " << player.getMP() << "  Attack: " << player.getAttack() << "  Magic Power: " << player.getMagicPower() << "  Defense: " << player.getDefense() << "  Money: " << player.getMoney();
 
     std::cin.ignore();
     std::cin.ignore();

@@ -36,5 +36,5 @@ void Enemy::setDefense(int defense)
 {
 	Defense = defense;
 }
-std::string Enemy::Name = "Enemy";  // You can set an initial value here
+std::string Enemy::Name = "Slime";  // You can set an initial value here
 

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player() : HP(50), Attack(3), Defense(1), MP(5), Money(0), Level(1), EXP(0), Item("") {
+Player::Player() : HP(50), Attack(3), Defense(1), MP(5), Money(0), Level(1), EXP(0), MagicPower(1), Item("") {
 
 }
 
@@ -35,6 +35,16 @@ int Player::getAttack() const
 void Player::setAttack(int attack)
 {
 	Attack = attack;
+}
+
+int Player::getMagicPower() const
+{
+	return MagicPower;
+}
+
+void Player::setMagicPower(int magicpower)
+{
+	MagicPower = magicpower;
 }
 
 int Player::getDefense() const

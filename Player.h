@@ -20,6 +20,9 @@ public:
 	int getDefense() const;
 	void setDefense(int defense);
 
+	int getMagicPower() const;
+	void setMagicPower(int magicpower);
+
 	int getMoney() const;
 	void setMoney(int money);
 
@@ -36,6 +39,7 @@ private:
 	int HP;
 	int MP;
 	int Attack;
+	int MagicPower;
 	int Defense;
 	int Money;
 	std::string Item;

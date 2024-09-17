@@ -12,6 +12,7 @@ public:
 	void Story();
 
 	void Init();
+	void EndingInit();
 	void Battle();
 
 	void Attack(Enemy& enemy);
@@ -19,17 +20,21 @@ public:
 	void Kick(Enemy& enemy);
 
 	void DealDamageToEnemy(Enemy& enemy, int dmg);
+	void DealMagicDamageToEnemy(Enemy& enemy, int dmg);
 
 	void Defend();
+
+	void Skill(Enemy& enemy, Player& player);
+
+	void Firaga(Enemy& enemy);
 
 	int RandomizerAtt(int damage);
 	int RandomizerKick(int damage);
 
 	void Enemyturn(Player& player);
 	void DealDamageToPlayer(Player& player, int dmg);
+
+	int prevPlayerHP;
+	int prevPlayerMP;
 private:
-	int currentPlayerHP;
-	int currentPlayerMP;
-	int currentEnemyHP;
-	int currentEnemyMP;
 };

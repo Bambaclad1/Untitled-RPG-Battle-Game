@@ -32,14 +32,13 @@ int main()
 			std::cin.clear(); // clear input
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			system("cls");
-			std::cout << "Invalid input! Please enter a number between 1 and 4.\n";
+			std::cout << "Invalid input! Please enter a number between 1 and 5.\n";
 			continue;
 		}
 		system("cls");
 
 		switch (menu) {
 		case 1:
-			profile.PlayerProfile();
 			//battleSystem.Story();
 			battleSystem.Init();
 			battleSystem.Battle();
