@@ -4,9 +4,11 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Battlesystem.h"
+#include "Profile.h"
 
 int main()
 {
+	Profile profile;
 	Player player;
 	Battlesystem battleSystem;
 	bool switching = true;
@@ -37,8 +39,9 @@ int main()
 
 		switch (menu) {
 		case 1:
-			battleSystem.Init();
+			profile.PlayerProfile();
 			//battleSystem.Story();
+			battleSystem.Init();
 			battleSystem.Battle();
 			switching = false;
 			return 1;

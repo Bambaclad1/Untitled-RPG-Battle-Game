@@ -20,8 +20,19 @@ public:
 	int getDefense() const;
 	void setDefense(int defense);
 
-private:
+	int getMoney() const;
+	void setMoney(int money);
 
+	int getLevel() const;
+	void setLevel(int level);
+
+	int getEXP() const;
+	void setEXP(int exp);
+
+
+private:
+	int Level;
+	int EXP;
 	int HP;
 	int MP;
 	int Attack;

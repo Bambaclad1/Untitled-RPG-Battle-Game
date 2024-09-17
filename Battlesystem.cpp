@@ -143,19 +143,33 @@ void Battlesystem::Init() {
 	int prevEnemyDef = enemy.getDefense();
 
 	turn = 1;
-	std::cout << "Battle start!\n";
+	Sleep(500);
+	std::cout << R"(
+
+__________         __    __  .__                     __                 __   
+\______   \_____ _/  |__/  |_|  |   ____     _______/  |______ ________/  |_ 
+ |    |  _/\__  \\   __\   __\  | _/ __ \   /  ___/\   __\__  \\_  __ \   __\
+ |    |   \ / __ \|  |  |  | |  |_\  ___/   \___ \  |  |  / __ \|  | \/|  |  
+ |______  /(____  /__|  |__| |____/\___  > /____  > |__| (____  /__|   |__|  
+        \/      \/                     \/       \/            \/             
+
+    )";
+	Sleep(500);
 }
 
 void Battlesystem::Battle() {
 	Player player;
 	Enemy enemy;
-	enemyTurn = true;
+
 	bool switching = true;
 	int menu = 1;
 	do {
-		std::cout << player.Name << " Has " << player.getHP() << " HP Left!\n";
-		std::cout << enemy.Name << " Has " << enemy.getHP() << " HP Left!\n" << "\n";
-		std::cout << "Current turn:" << turn << "\n";
+		enemyTurn = true;
+		isDefending = false;
+
+		std::cout << "\n" << player.Name << " Has " << player.getHP() << " HP Left!\n";
+		std::cout << enemy.Name << " Has " << enemy.getHP() << " HP Left!\n";
+		std::cout << "Current turn: " << turn << "\n" << "\n";
 
 		std::cout << "What do you do?\n";
 		std::cout << "1. Attack\n";
@@ -173,17 +187,29 @@ void Battlesystem::Battle() {
 		}
 		system("cls");
 
+		if (enemy.getHP() <= 0) {
+			std::cout << enemy.Name << " has been defeated!\n";
+			EnemyDied = true;
+			break;
+		}
+		else if (player.getHP() <= 0)
+		{
+			std::cout << player.Name << " has been defeated!\n";
+			PlayerDied = true;
+			break;
+		}
+
 		switch (menu) {
 		case 1:
 			Attack(enemy);
 			switching = false;
 			break;
 		case 2:
-			std::cout << "In construction.";
+			Defend();
 			switching = false;
 			break;
 		case 3:
-			std::cout << "In construction.";
+			std::cout << "You can't do anything yet. You barely know any skills.";
 			switching = false;
 			break;
 		case 4:
@@ -191,18 +217,46 @@ void Battlesystem::Battle() {
 			switching = false;
 			break;
 		}
+
 		if (enemy.getHP() <= 0) {
 			std::cout << enemy.Name << " has been defeated!\n";
+			EnemyDied = true;
+			break;
+		}
+		else if (player.getHP() <= 0)
+		{
+			std::cout << player.Name << " has been defeated!\n";
+			PlayerDied = true;
 			break;
 		}
 
-		// If the enemy is still alive, you can implement enemy's turn here
-		// For example:
-		// EnemyTurn(); // This would be a method to handle the enemy's actions
-		turn++;
-	} while (true); // Continue looping until the enemy's HP is zero or less
+		if (enemyTurn) {
+			Enemyturn(player);
+		}
 
-	std::cout << "Battle ended.\n";
+		if (enemy.getHP() <= 0) {
+			std::cout << enemy.Name << " has been defeated!\n";
+			EnemyDied = true;
+			break;
+		}
+		else if (player.getHP() <= 0)
+		{
+			std::cout << player.Name << " has been defeated!\n";
+			PlayerDied = true;
+			break;
+		}
+
+
+		turn++;
+	} while (true); 
+	Sleep(500);
+
+	if (EnemyDied) {
+		std::cout << "\nBattle won!";
+	}
+	else if (PlayerDied) {
+		std::cout << "\nBattle loss.";
+	}
 }
 
 void Battlesystem::Attack(Enemy& enemy) {
@@ -216,11 +270,9 @@ void Battlesystem::Attack(Enemy& enemy) {
 		std::cout << "\n";
 
 		std::cout << "2. Kick\n";
-		std::cout << "ATT | Kicks the enemy. 40% chance failing, 40% chance stun. Does 4 damage.\n";
+		std::cout << "ATT | Kicks the enemy. 20% chance failing, 40% chance stun. Does 4 damage.\n";
 		std::cout << "\n";
 
-		std::cout << "3. Spit\n";
-		std::cout << "DEF | Spits on the enemy. Has a 50% chance of halfing the enemys DEF for 3 turns.\n";
 		std::cin >> menu;
 
 		if (std::cin.fail()) {
@@ -240,10 +292,6 @@ void Battlesystem::Attack(Enemy& enemy) {
 			Kick(enemy);
 			switching = false;
 			break;
-		case 3:
-			Spit(enemy);
-			switching = false;
-			break;
 		}
 	}
 }
@@ -253,44 +301,44 @@ void Battlesystem::Punch(Enemy& enemy) {
 	std::cout << "Your fist was raging full of anger and power, ready to hit " << Enemy::Name << "!\n";
 	int dmg = RandomizerAtt(2);
 	Sleep(500);
-	std::cout << "\n" << "You dealt " << dmg << " Damage to " << Enemy::Name << "!\n";
-	std::cin.ignore();
-	std::cin.ignore();
-	int hp = enemy.getHP();
-	hp -= dmg; 
-	enemy.setHP(hp);
+	DealDamageToEnemy(enemy, dmg);
 }
 
-void Battlesystem::Kick(Enemy& enemy) { //add stun function
+void Battlesystem::Kick(Enemy& enemy) { 
 	system("cls");
-	std::cout << "Your feet was prepared and ready to deliver a humongous kick! " << Enemy::Name << "!\n";
-	int dmg = RandomizerAtt(2);
+	std::cout << "Your feet was prepared and ready to deliver a humongous kick to " << Enemy::Name << " !\n";
+	int dmg = RandomizerKick(2);
 	Sleep(500);
-	std::cout << "\n" << "You dealt " << dmg << " Damage to " << Enemy::Name << "!\n";
-	std::cin.ignore();
-	std::cin.ignore();
+	DealDamageToEnemy(enemy, dmg);
+}
+
+void Battlesystem::DealDamageToEnemy(Enemy& enemy, int dmg){
+	Player player;
+	int att = player.getAttack();
+	dmg = dmg * att;
 	int hp = enemy.getHP();
 	hp -= dmg;
 	enemy.setHP(hp);
+	std::cout << "\n" << "You dealt " << dmg << " Damage to " << Enemy::Name << "!\n";
+	
+	if (player.getAttack() >= 2 && dmg >= 0) {
+		std::cout << "However because of your Attack stat being " << player.getAttack() << " points, it was multiplied by that. Nice!\n";
+	}
+
+	Sleep(1000);
+
 }
 
-void Battlesystem::Spit(Enemy& enemy) {
-	system("cls");
-	std::cout << "You gathered all that saliva and " << Enemy::Name << "!\n";
-	int dmg = RandomizerAtt(2);
+void Battlesystem::Defend() {
+	std::cout << "You decided to get ready and brace yourself for this moment!\n";
 	Sleep(500);
-	std::cout << "\n" << "You dealt " << dmg << " Damage to " << Enemy::Name << "!\n";
-	std::cin.ignore();
-	std::cin.ignore();
-	int hp = enemy.getHP();
-	hp -= dmg;
-	enemy.setHP(hp);
+	isDefending = true;
 }
 
 int Battlesystem::RandomizerAtt(int damage) {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(1, 6);
+	std::uniform_int_distribution<> dis(1, 5);
 	int choice = dis(gen);
 	switch (choice) {
 	case 1:
@@ -306,8 +354,6 @@ int Battlesystem::RandomizerAtt(int damage) {
 	case 4:
 		return damage;
 	case 5:
-		return damage;
-	case 6:
 		damage = damage / 2;
 		std::cout << "That didn't feel good.. Weak Hit!\n";
 		return damage;
@@ -317,16 +363,22 @@ int Battlesystem::RandomizerAtt(int damage) {
 int Battlesystem::RandomizerKick(int damage) {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(1, 6);
+	std::uniform_int_distribution<> dis(1, 5);
 	int choice = dis(gen);
 	switch (choice) {
 	case 1:
 		damage = damage * 2;
-		std::cout << "Stunned him!!\n";
+		std::cout << "Stunned him!\n";
+		Sleep(500);
+		std::cout << "Your foe will not be able to fight back for this turn!\n";
+		enemyTurn = false;
 		return damage;
 	case 2:
 		damage = damage * 2;
 		std::cout << "Stunned him!\n";
+		Sleep(500);
+		std::cout << "Your foe will not be able to fight back for this turn!\n";
+		enemyTurn = false;
 		return damage;
 	case 3:
 		return damage;
@@ -336,9 +388,36 @@ int Battlesystem::RandomizerKick(int damage) {
 		damage = 0;
 		std::cout << "f#@k. you missed that one.. !\n";
 		return damage;
-	case 6:
-		damage = 0;
-		std::cout << "f#@k. you missed that one.. !\n";
-		return damage;
 	}
+}
+
+void Battlesystem::Enemyturn(Player& player) { // make enemy battle better
+	Sleep(500);
+	std::cout << "\n" << Enemy::Name << " readys his sword and slashes you in a slice! " << "\n";
+	int dmg = 5;
+	Sleep(500);
+
+
+	std::cout << "\n";
+
+	Sleep(500);
+	DealDamageToPlayer(player, dmg);
+}
+
+void Battlesystem::DealDamageToPlayer(Player& player, int dmg) {
+	if (isDefending) {
+		std::cout << "Although, you were bracing yourself for damage so damage is halved!\n";
+		dmg = dmg / 2;
+	}
+	int def = player.getDefense();
+
+	dmg = dmg - def;
+	std::cout << "You got " << dmg << " damage!" << "\n";
+	std::cout << "(however, your player has " << def << " defense points, so damage was substracted from that.)\n";
+
+	Sleep(500);
+	int hp = player.getHP();
+	hp -= dmg;
+	player.setHP(hp);
+
 }
