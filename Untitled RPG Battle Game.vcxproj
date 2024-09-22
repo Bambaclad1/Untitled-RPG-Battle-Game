@@ -130,7 +130,7 @@
     <ClCompile Include="Battlesystem.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Inventory.cpp" />
-    <ClCompile Include="item.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Profile.cpp" />
     <ClCompile Include="Untitled RPG Battle Game.cpp" />
@@ -148,7 +148,11 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Profile.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Untitled RPG Battle Game.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Untitled RPG Battle Game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,21 +1,20 @@
 #pragma once
-#include <vector>
-#include <string>
-
 #include "Item.h"
+#include <vector>
+#include "Player.h"
 
 class Inventory
 {
 public:
-    Inventory();
-    ~Inventory();
-public:
-    void AddItem(Item* anItem);
-    std::vector<Item*> GetItems();
-    void RemoveItem(Item* anItem);
+	Inventory();
+	~Inventory();
 
+	void InventoryGUI(Player& player);
+	void Potion();
+	void addItem(const Item& item); 
 private:
-    std::vector<Item*> items;
-    int capacity;
-    std::string color;
+
+	std::vector<Item> items;  // A list of items the player owns
+
 };
+

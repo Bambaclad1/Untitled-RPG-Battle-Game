@@ -5,6 +5,7 @@
 #include "Player.h"
 #include <random>
 #include "Profile.h"
+#include "Inventory.h"
 
 void Battlesystem::Story() {
 	std::cout << "Pending loading story mode";
@@ -134,9 +135,15 @@ The future of the world may rest in your hands. But in a land where magic is fea
 void Battlesystem::Init() {
 	Player player;
 	Enemy enemy;
+	Inventory playerInventory;
+
 	int prevPlayerHP = player.getHP();
 	int prevPlayerMP = player.getMP();
-
+	Item Potion;
+	Potion.setName("Potion");
+	Potion.setDescription("Heals 20 HP!");
+	Potion.setBoostHP(5);
+	playerInventory.addItem(Potion);
 	turn = 1;
 	Sleep(500);
 	std::cout << R"(
@@ -165,6 +172,7 @@ void Battlesystem::Battle() {
 	Player player;
 	Enemy enemy;
 	Profile profile;
+	Inventory playerInventory;
 
 	bool switching = true;
 	int menu = 1;
@@ -219,7 +227,9 @@ void Battlesystem::Battle() {
 			switching = false;
 			break;
 		case 4:
-			std::cout << "In construction.";
+			playerInventory.Potion();  
+			playerInventory.InventoryGUI(player);
+
 			switching = false;
 			break;
 		case 5:
@@ -508,3 +518,5 @@ void Battlesystem::DealDamageToPlayer(Player& player, int dmg) {
 	player.setHP(hp);
 
 }
+
+ 

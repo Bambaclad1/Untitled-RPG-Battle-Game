@@ -32,7 +32,6 @@ public:
 	int getEXP() const;
 	void setEXP(int exp);
 
-
 private:
 	int Level;
 	int EXP;
@@ -42,6 +41,5 @@ private:
 	int MagicPower;
 	int Defense;
 	int Money;
-	std::string Item;
 };
 

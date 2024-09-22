@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Battlesystem.h"
 #include "Profile.h"
+#include "Inventory.h"
 
 int main()
 {
