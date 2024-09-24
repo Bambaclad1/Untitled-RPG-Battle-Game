@@ -227,7 +227,8 @@ void Battlesystem::Battle() {
 			switching = false;
 			break;
 		case 4:
-			playerInventory.Potion();  
+			playerInventory.Potion();
+
 			playerInventory.InventoryGUI(player);
 
 			switching = false;

@@ -8,7 +8,6 @@ public:
 	Item();
 	~Item();
 
-	Item(const std::string& name) : name(name) {}
 
 	int getBoostHP() const;
 	void setBoostHP(int hp);
@@ -35,7 +34,6 @@ private:
 	int BoostMP;
 	int BoostATT;
 	int BoostMGP;
-	std::string name;
 
 };
 
