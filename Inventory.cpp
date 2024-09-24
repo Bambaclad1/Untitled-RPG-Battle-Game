@@ -12,11 +12,6 @@ Inventory::~Inventory()
 {
 }
 
-#include "Inventory.h"
-#include "Item.h"
-#include <iostream>
-#include <string>
-
 void Inventory::InventoryGUI(Player& player)
 {
     int menu = 0;
@@ -36,18 +31,19 @@ void Inventory::InventoryGUI(Player& player)
                     << " - " << items[i].getBoostHP() << " HP Boost\n";
             }
 
-            std::cout << items.size() + 1 << ". Exit\n";
         }
 
         std::cout << "Enter your choice: ";
         std::cin >> menu;
 
         if (menu > 0 && menu <= items.size()) {
+
             std::cout << "You selected: " << items[menu - 1].getName() << "\n";
             Item& selectedItem = items[menu - 1]; 
-            items.erase(items.begin() + (menu - 1));
             player.setHP(player.getHP() + 20);
-            std::cout << player.getHP() << " DEBUG! Player has that HP RN!";
+            std::cout << "Potion used! You got " << player.getHP() << " HP!";
+            items.erase(items.begin() + (menu - 1));
+
             break;
         }
         else {

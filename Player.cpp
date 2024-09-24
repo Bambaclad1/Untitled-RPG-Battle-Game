@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player() : HP(50), Attack(3), Defense(1), MP(5), Money(0), Level(1), EXP(0), MagicPower(1) {
+Player::Player() : HP(50), Attack(3), Defense(1), MP(10), Money(0), Level(1), EXP(0), MagicPower(1) {
 
 }
 

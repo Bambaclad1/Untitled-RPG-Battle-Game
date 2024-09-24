@@ -12,9 +12,10 @@ public:
 	void InventoryGUI(Player& player);
 	void Potion();
 	void addItem(const Item& item); 
-private:
 
-	std::vector<Item> items;  // A list of items the player owns
+private:
+	std::vector<Item> items;
+
 
 };
 
