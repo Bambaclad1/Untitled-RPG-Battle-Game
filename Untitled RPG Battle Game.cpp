@@ -40,7 +40,7 @@ int main()
 
 		switch (menu) {
 		case 1:
-			//battleSystem.Story();
+			battleSystem.Story();
 			battleSystem.Init();
 			battleSystem.Battle();
 			switching = false;

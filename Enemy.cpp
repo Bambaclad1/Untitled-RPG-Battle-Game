@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy() : HP(50), Attack(1), Defense(1), Money(0){
+Enemy::Enemy() : HP(20), Attack(1), Defense(1), Money(0){
 
 }
 
