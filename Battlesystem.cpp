@@ -126,6 +126,8 @@ The future of the world may rest in your hands. But in a land where magic is fea
 		}
 	} while (name.empty());
 
+	Player::Name = name;
+
 	std::cout << "\nPress Enter to continue...";
 	std::cin.ignore();
 	system("cls");
@@ -135,15 +137,9 @@ The future of the world may rest in your hands. But in a land where magic is fea
 void Battlesystem::Init() {
 	Player player;
 	Enemy enemy;
-	Inventory playerInventory;
 
 	int prevPlayerHP = player.getHP();
 	int prevPlayerMP = player.getMP();
-	Item Potion;
-	Potion.setName("Potion");
-	Potion.setDescription("Heals 20 HP!");
-	Potion.setBoostHP(5);
-	playerInventory.addItem(Potion);
 	turn = 1;
 	Sleep(500);
 	std::cout << R"(

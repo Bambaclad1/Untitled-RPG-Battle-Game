@@ -7,6 +7,7 @@
 #include "Profile.h"
 #include "Inventory.h"
 
+
 int main()
 {
 	Profile profile;
@@ -23,10 +24,8 @@ int main()
 		std::cout << "Welcome to the main menu.\n";
 		std::cout << "Please give a input.\n";
 		std::cout << "1. Play Story Mode\n";
-		std::cout << "2. Play Ladder mode\n";
-		std::cout << "3. Play Custom Battle\n";
-		std::cout << "4. Settings\n";
-		std::cout << "5. Credits\n";
+		std::cout << "2. Settings\n";
+		std::cout << "3. Credits\n";
 		std::cin >> menu;
 
 		if (std::cin.fail()) {
@@ -47,7 +46,7 @@ int main()
 			return 1;
 			break;
 		case 2:
-			std::cout << "In construction.";
+			std::cout << "\nWelcome to settings!." << "\nYou can choose what color you want for your terminal!";
 			switching = false;
 			return 1;
 			break;
@@ -57,11 +56,7 @@ int main()
 
 			return 1;
 			break;
-		case 4:
-			std::cout << "In construction.";
-			switching = false;
-			return 1;
-			break;
 		}
 	}
 }
+
