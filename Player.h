@@ -1,9 +1,11 @@
 #pragma once
 #include "string"
 
+
 class Player
 {
 public:
+
 	Player();
 	~Player();
 	static std::string Name;

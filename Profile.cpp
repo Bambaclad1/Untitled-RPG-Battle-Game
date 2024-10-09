@@ -2,10 +2,10 @@
 #include "Player.h"
 #include <iostream>
 #include <windows.h>
+#include <vector>
 
 void Profile::PlayerProfile()
 {
-    Player player;
     std::cout << R"(
 __________.__                              __________                _____.__.__          
 \______   \  | _____  ___.__. ___________  \______   \_______  _____/ ____\__|  |   ____  

@@ -20,7 +20,5 @@ private:
 	int HP;
 	int Attack;
 	int Defense;
-	int Money;
-	std::string Item;
-};
+	int Money;};
 

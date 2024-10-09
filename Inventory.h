@@ -14,7 +14,7 @@ public:
 	void addItem(const Item& item); 
 
 private:
-	std::vector<Item> items;
+		std::vector<Item> items;
 
 
 };

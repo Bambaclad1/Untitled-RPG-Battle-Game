@@ -275,6 +275,9 @@ void Battlesystem::Battle() {
 
 	if (EnemyDied) {
 		std::cout << "\nBattle won!";
+		std::cout << "\nWon 5 EXP and 5 dollars!";
+		player.setEXP(player.getEXP() + 5);
+		player.setMoney(player.getMoney() + 5);
 	}
 	else if (PlayerDied) {
 		std::cout << "\nBattle loss.";
